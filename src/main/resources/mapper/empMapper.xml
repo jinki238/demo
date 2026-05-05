@@ -2,43 +2,49 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.empdemo.mapper.EmpMapper">
+<mapper namespace="com.example.demo.emp.mapper.EmpMapper">
 
-    <resultMap id="empResultMap" type="com.example.empdemo.dto.EmpDTO">
+    <resultMap id="empResultMap" type="com.example.demo.emp.dto.EmpDTO">
         <id property="empno" column="empno"/>
         <result property="ename" column="ename"/>
         <result property="job" column="job"/>
         <result property="sal" column="sal"/>
         <result property="hiredate" column="hiredate"/>
+        <result property="mgr" column="mgr"/>
+        <result property="comm" column="comm"/>
+        <result property="deptno" column="deptno"/>
     </resultMap>
 
     <!-- 목록 -->
     <select id="selectEmpList" resultMap="empResultMap">
-        SELECT empno, ename, job, sal, hiredate
+        SELECT empno, ename, job, sal, hiredate, mgr, comm, deptno
         FROM emp
         ORDER BY empno
     </select>
 
     <!-- 상세 -->
     <select id="selectEmpDetail" parameterType="int" resultMap="empResultMap">
-        SELECT empno, ename, job, sal, hiredate
+        SELECT empno, ename, job, sal, hiredate, mgr, comm, deptno
         FROM emp
         WHERE empno = #{empno}
     </select>
 
     <!-- 등록 -->
-    <insert id="insertEmp" parameterType="com.example.empdemo.dto.EmpDTO">
-        INSERT INTO emp (empno, ename, job, sal, hiredate)
-        VALUES (#{empno}, #{ename}, #{job}, #{sal}, #{hiredate})
+    <insert id="insertEmp" parameterType="com.example.demo.emp.dto.EmpDTO">
+        INSERT INTO emp (empno, ename, job, sal, hiredate, mgr, comm, deptno)
+        VALUES (#{empno}, #{ename}, #{job}, #{sal}, #{hiredate}, #{mgr}, #{comm}, #{deptno})
     </insert>
 
     <!-- 수정 -->
-    <update id="updateEmp" parameterType="com.example.empdemo.dto.EmpDTO">
+    <update id="updateEmp" parameterType="com.example.demo.emp.dto.EmpDTO">
         UPDATE emp
         SET ename = #{ename},
             job   = #{job},
-            sal   = #{sal}
-            hiredate = #{hiredate}
+            sal   = #{sal},
+            hiredate = #{hiredate},
+            mgr = #{mgr},
+            comm = #{comm},
+            deptno = #{deptno}
         WHERE empno = #{empno}
     </update>
 

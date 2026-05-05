@@ -2,7 +2,7 @@ package com.example.demo.emp.mapper;
 
 import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
-import com.example.demo.dto.EmpDTO;
+import com.example.demo.emp.dto.EmpDTO;
 
 @Mapper
 public interface EmpMapper {

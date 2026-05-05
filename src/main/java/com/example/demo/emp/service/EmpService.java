@@ -1,7 +1,7 @@
 package com.example.demo.emp.service;
 
 import java.util.List;
-import com.example.empdemo.dto.EmpDTO;
+import com.example.demo.emp.dto.EmpDTO;
 
 public interface EmpService {
 

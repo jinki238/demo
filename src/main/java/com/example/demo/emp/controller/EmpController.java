@@ -1,7 +1,8 @@
 package com.example.demo.emp.controller;
 
-import com.example.empdemo.dto.EmpDTO;
-import com.example.empdemo.service.EmpService;
+
+import com.example.demo.emp.dto.EmpDTO;
+import com.example.demo.emp.service.EmpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
@@ -42,32 +43,32 @@ public class EmpController {
 
 
 
-//    @GetMapping("/create")
-//    public String createForm() {
-//        return "emp/create";
-//    }
-//
-//    @PostMapping("/create")
-//    public String create(EmpDTO emp) {
-//        empService.createEmp(emp);
-//        return "redirect:/emp/list";
-//    }
-//
-//    @GetMapping("/edit")
-//    public String editForm(@RequestParam int empno, Model model) {
-//        model.addAttribute("emp", empService.getEmpById(empno));
-//        return "emp/edit";
-//    }
-//
-//    @PostMapping("/edit")
-//    public String edit(EmpDTO emp) {
-//        empService.updateEmp(emp);
-//        return "redirect:/emp/list";
-//    }
-//
-//    @PostMapping("/delete")
-//    public String delete(@RequestParam int empno) {
-//        empService.deleteEmp(empno);
-//        return "redirect:/emp/list";
-//    }
+    @GetMapping("/create")
+   public String createForm() {
+        return "emp/create";
+    }
+
+    @PostMapping("/create")
+    public String create(EmpDTO emp) {
+        empService.createEmp(emp);
+        return "redirect:/emp/list";
+    }
+
+    @GetMapping("/edit")
+    public String editForm(@RequestParam int empno, Model model) {
+        model.addAttribute("emp", empService.getEmpById(empno));
+        return "emp/edit";
+    }
+
+    @PostMapping("/edit")
+    public String edit(EmpDTO emp) {
+        empService.updateEmp(emp);
+        return "redirect:/emp/list";
+    }
+
+    @PostMapping("/delete")
+    public String delete(@RequestParam int empno) {
+        empService.deleteEmp(empno);
+        return "redirect:/emp/list";
+    }
 }
