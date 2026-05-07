@@ -12,7 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+@CrossOrigin(origins = "http://localhost:3000/")
 @Controller
 @RequiredArgsConstructor
 @Slf4j
@@ -21,16 +21,6 @@ public class MemberController {
 
 	private final MemberService memberService;
 
-	@GetMapping("/main")
-	public String main() {
-		return "member/main";
-	}
-
-	@GetMapping("/joinform")
-	public String joinform() {
-		return "member/joinform";
-	}
-
 	// =========================
 	// 화면 반환
 	// =========================
@@ -38,12 +28,15 @@ public class MemberController {
 	public String t1() {
 		return "member/index";
 	}
-
+	@GetMapping("/joinForm")
+	public String joinForm(){
+		return "member/joinForm";
+	}
 	// =========================
 	// 전체 조회 (READ ALL)
 	// GET /member
 	// =========================
-	@GetMapping("/list")
+	@GetMapping
 	@ResponseBody
 	public ResponseEntity<ApiResponse<List<MemberDTO>>> getList() {
 		List<MemberDTO> list = memberService.getMemberList();
@@ -111,5 +104,4 @@ public class MemberController {
 		memberService.deleteMember(id);
 		return ResponseEntity.noContent().build(); // 204
 	}
-
 }

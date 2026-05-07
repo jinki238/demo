@@ -1,17 +1,17 @@
 package com.example.demo.emp.controller;
 
-
+import com.example.demo.common.ApiResponse;
 import com.example.demo.emp.dto.EmpDTO;
 import com.example.demo.emp.service.EmpService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@CrossOrigin(origins = "http://localhost:3000")
+@RestController
 @RequiredArgsConstructor
 @Slf4j
 @RequestMapping("/emp")
@@ -19,56 +19,66 @@ public class EmpController {
 
     private final EmpService empService;
 
-    @GetMapping("/home")
-    public String home(Model model) {
-        return "emp/home";
-
-    }
-
-    @GetMapping("/list")
-    public String list(Model model) {
+    // =========================
+    // 전체 조회
+    // GET /emp
+    // =========================
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<EmpDTO>>> getList() {
         List<EmpDTO> list = empService.getEmpList();
-        model.addAttribute("list", list);
-        return "emp/list";
+        return ResponseEntity.ok(
+                ApiResponse.success(list)
+        );
     }
 
-    @GetMapping("/detail")
-    public String detail(@RequestParam int empno, Model model) {
-        EmpDTO emp=empService.getEmpById(empno);
-        model.addAttribute("emp", emp);
-        return "emp/detail";
+    // =========================
+    // 단일 조회
+    // GET /emp/{empno}
+    // =========================
+    @GetMapping("/{empno}")
+    public ResponseEntity<ApiResponse<EmpDTO>> getDetail(@PathVariable int empno) {
+        EmpDTO emp = empService.getEmpById(empno);
+        return ResponseEntity.ok(
+                ApiResponse.success(emp)
+        );
     }
 
-
-
-
-
-    @GetMapping("/create")
-   public String createForm() {
-        return "emp/create";
-    }
-
-    @PostMapping("/create")
-    public String create(EmpDTO emp) {
+    // =========================
+    // 생성
+    // POST /emp
+    // =========================
+    @PostMapping
+    public ResponseEntity<ApiResponse<Void>> create(@RequestBody EmpDTO emp) {
         empService.createEmp(emp);
-        return "redirect:/emp/list";
+        return ResponseEntity
+                .status(201)
+                .body(ApiResponse.success("사원 생성 완료", null));
     }
 
-    @GetMapping("/edit")
-    public String editForm(@RequestParam int empno, Model model) {
-        model.addAttribute("emp", empService.getEmpById(empno));
-        return "emp/edit";
-    }
+    // =========================
+    // 수정
+    // PUT /emp/{empno}
+    // =========================
+    @PutMapping("/{empno}")
+    public ResponseEntity<ApiResponse<Void>> update(
+            @PathVariable int empno,
+            @RequestBody EmpDTO emp) {
 
-    @PostMapping("/edit")
-    public String edit(EmpDTO emp) {
+        emp.setEmpno(empno);
         empService.updateEmp(emp);
-        return "redirect:/emp/list";
+
+        return ResponseEntity.ok(
+                ApiResponse.success("사원 수정 완료", null)
+        );
     }
 
-    @PostMapping("/delete")
-    public String delete(@RequestParam int empno) {
+    // =========================
+    // 삭제
+    // DELETE /emp/{empno}
+    // =========================
+    @DeleteMapping("/{empno}")
+    public ResponseEntity<Void> delete(@PathVariable int empno) {
         empService.deleteEmp(empno);
-        return "redirect:/emp/list";
+        return ResponseEntity.noContent().build();
     }
 }
